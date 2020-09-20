@@ -20,3 +20,8 @@ sudo gitlab-ctl status
 # This command will overwrite the contents of your GitLab database!
 sudo gitlab-backup restore BACKUP=11493107454_2018_04_25_10.6.4-ce
 ```
+```bash
+sudo gitlab-ctl reconfigure
+sudo gitlab-ctl restart
+sudo gitlab-rake gitlab:check SANITIZE=true
+```
