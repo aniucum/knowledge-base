@@ -1,0 +1,6 @@
+[WEB_SERVER_1]
+ubuntu1 ansible_host=18.185.102.10
+
+
+[SERVERS_AWS:children]
+WEB_SERVER_1

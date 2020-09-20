@@ -1,0 +1,12 @@
+---
+- name: ping
+  hosts: all
+  become: yes
+  pre_tasks:
+   - name: 'install python2'
+     raw: sudo apt-get -y install python
+
+  tasks:
+
+   - name: ping the svrs
+     ping:

@@ -1,0 +1,82 @@
+---
+- name: potgresql
+  hosts: all
+  become: yes
+
+  vars:
+   proxy_env:
+     http_proxy:
+     https_proxy:
+   version_of_postgresql: 9.6
+   postgresql_install: 96
+   #enviroment:
+     #PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+  tasks:
+ 
+   - name: install epel-release
+     yum:
+       name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm
+       state: present
+
+   - name: Import EPEL GPG key
+     rpm_key:
+       key: /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}
+       state: present
+
+   - name: postgresql repo 9.6
+     yum:
+       name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+       state: present
+   
+   - name: install postgresql {{ version_of_postgresql }}
+     yum:
+       name: "{{ packages }}"
+     vars:
+       packages:
+       - postgresql{{ postgresql_install }}-server
+
+   #- name: initialize postgresql
+     #command: /usr/pgsql-{{ version_of_postgresql }}/bin/postgresql{{ postgresql_install }}-setup initdb
+     
+     
+   - name: start postgresql and enable
+     service: name=postgresql-{{ version_of_postgresql }} state=started enabled=yes
+
+   - name: configure pg_hba.conf
+     template: src=./master/pg_hba.conf.j2 dest=/var/lib/pgsql/{{ version_of_postgresql }}/data/pg_hba.conf
+     notify: restart postgresql
+     when: inventory_hostname in groups['master']
+
+   - name: configure postgresql.conf
+     template: src=./master/postgresql.conf.j2 dest=/var/lib/pgsql/{{ version_of_postgresql }}/data/postgresql.conf
+     notify: restart postgresql
+     when: inventory_hostname in groups['master']
+
+   - name: configure pg_hba.conf
+     template: src=./slave/pg_hba.conf.j2 dest=/var/lib/pgsql/{{ version_of_postgresql }}/data/pg_hba.conf
+     notify: restart postgresql
+     when: inventory_hostname in groups['slave']
+
+   - name: configure postgresql.conf
+     template: src=./slave/postgresql.conf.j2 dest=/var/lib/pgsql/{{ version_of_postgresql }}/data/postgresql.conf
+     notify: restart postgresql
+     when: inventory_hostname in groups['slave']
+
+   - name: open 5432/tcp firewalld
+     firewalld:
+       port: 5432/tcp
+       permanent: yes
+       state: disabled
+     notify: firewalld reload
+
+
+
+
+  handlers:
+   - name: restart postgresql
+     service: name=postgresql-{{ version_of_postgresql }} state=restarted
+   - name: firewalld reload
+     command: firewall-cmd --reload
+
+

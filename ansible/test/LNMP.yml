@@ -1,0 +1,15 @@
+---
+- name: install default nginx
+  hosts: all
+  become: yes
+
+
+
+
+  tasks:
+  - name: install nginx
+    apt:  name=nginx state=latest
+
+
+  - name: start nginx and chkconfig on
+    service: name=nginx state=started enabled=yes

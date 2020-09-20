@@ -1,0 +1,5 @@
+[master]
+postgres_master ansible_host=localhost ansible_user=root ansible_password=password
+[slave]
+postgres_slave ansible_host=192.168.97.115 ansible_user=root ansible_password=password
+
