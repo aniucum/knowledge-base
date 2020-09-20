@@ -1,0 +1,102 @@
+version: '2.2'
+
+services:
+
+  elasticsearch:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    container_name: es01
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      #блокировка памяти только для elasticsearch
+      #unable to lock memory
+      #- bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+      - cluster.name=ELK_TEST
+      #ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      #приязка узла к сетевому интерфейсу, по умолчанию используется network.host
+      - network.bind_host=0.0.0.0
+      #node communication
+      - node.name=node01
+      - node.master=true
+      - node.data=true
+      #предварительная загрузка и обработка документов перед индексированием, включено по умолчанию
+      #например, применение фильтра grok перед загрузкой документа в индекс
+      - node.ingest=true
+      - ELASTIC_PASSWORD=changeme
+    volumes:
+      #конфиг es, ro=read only
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      #кладём папку с данными за пределы контейнера
+      - node01:/usr/share/elasticsearch/data10
+      #папка с сертификатами, $CERTS_DIR смотри в .env
+      #- ./certificates:$CERTS_DIR
+    networks:
+      - elk
+##############################
+  logstash:
+    restart: unless-stopped
+    build:
+      context: logstash/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    container_name: logstash01
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    environment:
+      - "LS_JAVA_OPTS=-Xmx256m -Xms256m"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+##############################
+  kibana:
+    restart: unless-stopped
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    container_name: kibana
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+##############################
+  filebeat:
+    restart: unless-stopped
+    build:
+     context: filebeat/
+     args:
+       ELK_VERSION: $ELK_VERSION
+   #we need to rights of root for access to log-files
+    user: root
+    container_name: filebeat
+    volumes:
+     - ./filebeat/config/filebeat.yml:/etc/filebeat/filebeat.yml
+     #share directory with log-files
+     - /var/log:/var/log
+    ports:
+     - "5044:5044"
+    networks:
+     - elk
+#============================#
+#объявляем network и volumes, чтобы не получить ошибку "no declaration was found in the volumes section"
+networks:
+  elk:
+    driver: bridge
+
+volumes:
+  node01:
+   driver: local
