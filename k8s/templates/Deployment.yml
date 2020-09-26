@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: someservice-deployment
+ labels:
+    app: someservice
+ namespace: someproject
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   project: someproject
+   app: someservice
+#по меткам в template настраивается Service
+ template:
+  metadata:
+   labels:
+    project: someproject
+    app: someservice
+  spec:
+   containers:
+   - image: someservice:{{ version }}
+     name: someservice
+     imagePullPolicy: IfNotPresent #Always
+     env:
+     - name: RABBITMQ_DEFAULT_USER
+       value: "mqadmin"
+     - name: RABBITMQ_DEFAULT_PASS
+       value: "mqadminpassword"
+     ports:
+     - containerPort: 3000
+   dnsPolicy: "None"
+   dnsConfig:
+     nameservers:
+      - 10.233.0.3
+     searches:
+      - someproject.svc.cluster.local
+      - svc.cluster.local
+      - cluster.local
+   hostAliases:
+   - ip: "10.10.10.174"
+     hostnames:
+     - "rabbitmq"
+     - "database"
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: someservice-service
+ labels:
+    name: someservice
+ namespace: someproject
+spec:
+ #привязка модуля к клиенту
+ sessionAffinity: ClientIP
+ ports:
+  - name: someservice
+    # protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 30300
+ type: NodePort
+ selector:
+  #указываем label из Deployment:template:metadata:labels
+  app: someservice
