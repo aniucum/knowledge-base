@@ -27,3 +27,21 @@ RESTORE
 // postgres-user    database user that is able to access the database
 // database-name    name of the database
 cat database.sql | kubectl exec -i [pod-name] -n namespace -- psql -U [postgres-user] -d [database-name]
+
+### remove & join node
+// I version
+// drain the node
+kubectl drain <node-name>
+// or
+kubectl drain <node-name> --ignore-daemonsets --delete-local-data
+//delete the node
+kubectl delete node <node-name>
+
+// II version
+//on the node
+kubeadm reset
+
+// master
+kubeadm token create --print-join-command
+// on the pod
+kubeadm join 10.10.10.10:6443 --token {{ token }}     --discovery-token-ca-cert-hash sha256:{{ sha256 }}
