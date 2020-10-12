@@ -45,3 +45,5 @@ kubeadm reset
 kubeadm token create --print-join-command
 // on the pod
 kubeadm join 10.10.10.10:6443 --token {{ token }}     --discovery-token-ca-cert-hash sha256:{{ sha256 }}
+
+kubectl label node node1 node-role.kubernetes.io/node-
