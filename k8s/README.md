@@ -50,7 +50,9 @@ kubectl label node node1 node-role.kubernetes.io/node=
 
 
 ERROR
+```bash
 /proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1
+```
 
 /etc/sysctl.conf
 net.bridge.bridge-nf-call-iptables = 1
