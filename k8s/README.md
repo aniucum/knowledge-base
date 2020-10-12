@@ -46,4 +46,12 @@ kubeadm token create --print-join-command
 // on the pod
 kubeadm join 10.10.10.10:6443 --token {{ token }}     --discovery-token-ca-cert-hash sha256:{{ sha256 }}
 
-kubectl label node node1 node-role.kubernetes.io/node-
+kubectl label node node1 node-role.kubernetes.io/node=
+
+
+ERROR
+/proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1
+
+/etc/sysctl.conf
+net.bridge.bridge-nf-call-iptables = 1
+sudo sysctl -p
