@@ -49,11 +49,9 @@ kubeadm join 10.10.10.10:6443 --token {{ token }}     --discovery-token-ca-cert-
 kubectl label node node1 node-role.kubernetes.io/node=
 
 
-ERROR
+### ERROR
 ```bash
 /proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1
 ```
-
-/etc/sysctl.conf
-net.bridge.bridge-nf-call-iptables = 1
-sudo sysctl -p
+1. echo 'net.bridge.bridge-nf-call-iptables = 1' >> /etc/sysctl.conf
+1. sudo sysctl -p
