@@ -9,4 +9,10 @@
    3. rebuild index *
    4. disconnect
    5. exit
-    
+
+#### How to rebuild the Admin - Compact blobstore deletions index file if soft-deleted blobs are orphaned
+https://support.sonatype.com/hc/en-us/articles/360025325653-How-to-rebuild-the-Admin-Compact-blobstore-deletions-index-file-if-soft-deleted-blobs-are-orphaned
+Add the following line to the `metadata.properties` file in the root directory of the blobstore.
+```bash
+rebuildDeletedBlobIndex=true
+```
