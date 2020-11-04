@@ -2,8 +2,10 @@
 PV (Physical Volume)
 ```bash
 pvs
-pvdisplay
 ```
+![pvs](https://github.com/aniucum/knowledge-base/tree/master/lvm/images/01_pvc.jpg?raw=true)
+pvdisplay
+
 VG (Volume Group)
 ```bash
 vgs
@@ -14,8 +16,10 @@ LV (Logical Volume)
 lvs
 lvdisplay
 ```
-
-
+info about new disk
+```bash
+fdisk -l
+```
 
 
 ```bash
