@@ -8,3 +8,5 @@ elif (age >=12) and (age <19):
     print("you are teen")
 else:
     print("you are old")
+
+print("---end---")
