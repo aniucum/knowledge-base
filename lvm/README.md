@@ -3,7 +3,7 @@ PV (Physical Volume)
 ```bash
 pvs
 ```
-![pvs](https://github.com/aniucum/knowledge-base/tree/master/lvm/images/01_pvc.jpg?raw=true)
+![pvs](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/01_pvc.jpg?raw=true)
 pvdisplay
 
 VG (Volume Group)
