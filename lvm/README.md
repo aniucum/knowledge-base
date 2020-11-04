@@ -26,7 +26,7 @@ lvs
 lvdisplay
 ```
 ![lvdisplay](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/06_lvdisplay.jpg?raw=true)
-info about new disk
+### info about new disk
 ```bash
 fdisk -l
 ```
