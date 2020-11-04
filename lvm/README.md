@@ -27,6 +27,8 @@ lvs
 lvdisplay
 ```
 ![lvdisplay](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/06_lvdisplay.jpg?raw=true)
+
+
 ## 2. add new disk 50Gb and get info about
 ```bash
 fdisk -l
@@ -37,15 +39,25 @@ fdisk -l
 lvmdiskscan
 ```
 ![lvmdiskscan](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/08_lvmdiskscan.jpg?raw=true)
-## 3. create PV
+
+
+## 3. create `PV /dev/sdb`
 ```bash
 pvcreate /dev/sdb
 ```
-![pvcreate](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/09_pvcreate.jpg.jpg?raw=true)
+![pvcreate](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/09_pvcreate.jpg?raw=true)
 ```bash
 lvmdiskscan -l
 ```
-![pvcreate](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/10_lvmdiskscan.jpg.jpg?raw=true)
+![pvcreate](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/10_lvmdiskscan.jpg?raw=true)
+
+
+
+## 4. add `PV /dev/sdb` to `LV centos`
+```bash
+vgextend centos /dev/sdb
+```
+![vgextend](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/11_vgextend.jpg?raw=true)
 
 ```bash
 xfs_growfs /dev/centos/root
