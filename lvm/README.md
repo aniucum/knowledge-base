@@ -1,6 +1,6 @@
-# lvm
+## lvm
 ## 1. get info
-### PV (Physical Volume)
+#### PV (Physical Volume)
 ```bash
 pvs
 ```
@@ -9,7 +9,7 @@ pvs
 pvdisplay
 ```
 ![pvdisplay](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/02_pvdisplay.jpg?raw=true)
-### VG (Volume Group)
+#### VG (Volume Group)
 ```bash
 vgs
 ```
@@ -18,7 +18,7 @@ vgs
 vgdisplay
 ```
 ![vgdisplay](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/04_vgdisplay.jpg?raw=true)
-### LV (Logical Volume)
+#### LV (Logical Volume)
 ```bash
 lvs
 ```
