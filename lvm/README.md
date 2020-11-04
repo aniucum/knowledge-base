@@ -42,7 +42,10 @@ lvmdiskscan
 pvcreate /dev/sdb
 ```
 ![pvcreate](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/09_pvcreate.jpg.jpg?raw=true)
-
+```bash
+lvmdiskscan -l
+```
+![pvcreate](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/10_lvmdiskscan.jpg.jpg?raw=true)
 
 ```bash
 xfs_growfs /dev/centos/root
