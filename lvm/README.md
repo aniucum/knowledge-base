@@ -100,3 +100,12 @@ Then run it with `-a` to erase those signatures:
 # wipefs /dev/sdb
 #
 ```
+
+```bash
+pvcreate --uuid "07b6hd-RunD-esW7-DvZn-0MDF-yi63-YcWuwA" --restorefile /etc/lvm/archive/centos_00002-207124849.vg /dev/sdc
+vgcfgrestore  centos
+lvchange -ay /dev/centos/opt
+vgchange -ay centos
+
+lvs -a -o +devices
+```
