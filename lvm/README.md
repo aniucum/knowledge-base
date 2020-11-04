@@ -63,8 +63,12 @@ vgextend centos /dev/sdb
 lvm lvextend -l +100%FREE /dev/centos/opt
 ```
 ![lvextend](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/12_lvextend.jpg?raw=true)
-
-
 ```bash
-xfs_growfs /dev/centos/root
+resize2fs -p /dev/mapper/centos-opt
 ```
+![resize2fs](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/13_resize2fs.jpg?raw=true)
+### `resize2fs` support ext2/3/4, that's why we need `xfs_growfs` that support xfs
+```bash
+xfs_growfs /dev/mapper/centos-opt
+```
+![xfs_growfs](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/14_xfs_growfs.jpg?raw=true)
