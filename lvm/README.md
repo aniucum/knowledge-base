@@ -26,12 +26,16 @@ lvs
 lvdisplay
 ```
 ![lvdisplay](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/06_lvdisplay.jpg?raw=true)
-### info about new disk
+### add new disk 50Gb and get info about
 ```bash
 fdisk -l
 ```
 ![fdisk01](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/07_fdisk01.jpg?raw=true)
-
+### or
+```bash
+lvmdiskscan
+```
+![lvmdiskscan](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/08_lvmdiskscan.jpg?raw=true)
 ```bash
 xfs_growfs /dev/centos/root
 ```
