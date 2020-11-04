@@ -58,6 +58,12 @@ lvmdiskscan -l
 vgextend centos /dev/sdb
 ```
 ![vgextend](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/11_vgextend.jpg?raw=true)
+### extend  
+```bash
+lvm lvextend -l +100%FREE /dev/centos/opt
+```
+![lvextend](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/12_lvextend.jpg?raw=true)
+
 
 ```bash
 xfs_growfs /dev/centos/root
