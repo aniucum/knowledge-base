@@ -1,5 +1,5 @@
 # lvm
-PV (Physical Volume)
+### PV (Physical Volume)
 ```bash
 pvs
 ```
@@ -8,12 +8,12 @@ pvs
 pvdisplay
 ```
 ![pvs](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/02_pvdisplay.jpg?raw=true)
-VG (Volume Group)
+### VG (Volume Group)
 ```bash
 vgs
 vgdisplay
 ```
-LV (Logical Volume)
+### LV (Logical Volume)
 ```bash
 lvs
 lvdisplay
