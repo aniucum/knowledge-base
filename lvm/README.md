@@ -72,3 +72,14 @@ resize2fs -p /dev/mapper/centos-opt
 xfs_growfs /dev/mapper/centos-opt
 ```
 ![xfs_growfs](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/14_xfs_growfs.jpg?raw=true)
+
+```bash
+vgreduce --removemissing --verbose --force centos
+dmsetup info -c | grep opt
+lsof | grep "253,2"
+dmsetup ls --tree
+lsblk
+```
+```bash
+testdisk /dev/sdb
+```
