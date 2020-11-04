@@ -1,4 +1,5 @@
 # lvm
+## 1. get info
 ### PV (Physical Volume)
 ```bash
 pvs
@@ -26,7 +27,7 @@ lvs
 lvdisplay
 ```
 ![lvdisplay](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/06_lvdisplay.jpg?raw=true)
-### add new disk 50Gb and get info about
+## 2. add new disk 50Gb and get info about
 ```bash
 fdisk -l
 ```
@@ -36,6 +37,13 @@ fdisk -l
 lvmdiskscan
 ```
 ![lvmdiskscan](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/08_lvmdiskscan.jpg?raw=true)
+## 3. create PV
+```bash
+pvcreate /dev/sdb
+```
+![pvcreate](https://github.com/aniucum/knowledge-base/blob/master/lvm/images/09_pvcreate.jpg.jpg?raw=true)
+
+
 ```bash
 xfs_growfs /dev/centos/root
 ```
