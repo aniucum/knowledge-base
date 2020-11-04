@@ -83,3 +83,20 @@ lsblk
 ```bash
 testdisk /dev/sdb
 ```
+##################################################################################
+### clean Disk
+```bash
+# wipefs /dev/sdb
+offset               type
+----------------------------------------------------------------
+0x0                  xfs   [filesystem]
+                     UUID:  72f2a607-8af7-44c0-83c2-f1565cd68a1a                     
+```
+Then run it with `-a` to erase those signatures:
+```bash
+# wipefs -a /dev/sdb
+/dev/sdb: 4 bytes were erased at offset 0x00000000 (xfs): 58 46 53 42
+
+# wipefs /dev/sdb
+#
+```
