@@ -109,3 +109,11 @@ vgchange -ay centos
 
 lvs -a -o +devices
 ```
+reverse
+```bash
+pvcreate --uuid "07b6hd-RunD-esW7-DvZn-0MDF-yi63-YcWuwA" --restorefile /etc/lvm/archive/centos_00003-1938821530.vg /dev/sdb
+vgcfgrestore  centos
+lvs -a -o +devices
+lvchange -ay /dev/centos/opt
+fsck ?
+```
