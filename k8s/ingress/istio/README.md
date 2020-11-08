@@ -1,7 +1,7 @@
 ### istio
 https://istio.io/latest/docs/
 
-
+https://medium.com/google-cloud/back-to-microservices-with-istio-p1-827c872daa53
 Istio in Practice – Routing with VirtualService
 https://rinormaloku.com/istio-practice-routing-virtualservices/
 
