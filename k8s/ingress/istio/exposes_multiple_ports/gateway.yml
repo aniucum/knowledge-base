@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: myapp-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: port1
+      protocol: TCP
+    hosts:
+    - example.myhost.com
+  - port:
+      number: 8088
+      name: port2
+      protocol: TCP
+    hosts:
+    - example.myhost.com

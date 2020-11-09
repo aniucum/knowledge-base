@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: myapp-virtual-service
+spec:
+  hosts:
+  - example.myhost.com
+  gateways:
+  - myapp-gateway
+  tcp:
+  - match:
+    - port: 80
+    route:
+    - destination:
+        host: myapp.prod.svc.cluster.local
+        port:
+          number: 5556
+  - match:
+    - port: 8088
+    route:
+    - destination:
+        host: myapp.prod.svc.cluster.local
+        port:
+          number: 5555
