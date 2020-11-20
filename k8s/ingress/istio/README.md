@@ -1,6 +1,8 @@
 ### istio
 https://istio.io/latest/docs/
 
+https://github.com/istio-up-and-running
+
 istioworkshop
 https://www.istioworkshop.io/09-traffic-management/01-ingress-gateway/
 
