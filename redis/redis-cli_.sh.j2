@@ -1,0 +1,46 @@
+
+
+#!/bin/sh
+
+
+
+MASTER1={{ redis.cluster.master.node1 }}
+MASTER2={{ redis.cluster.master.node2 }}
+MASTER3={{ redis.cluster.master.node3 }}
+
+SLAVE1={{ redis.cluster.master.node1 }}
+SLAVE2={{ redis.cluster.master.node2 }}
+SLAVE3={{ redis.cluster.master.node3 }}
+
+PASSWD=12345
+
+PORT1={{ redis.cluster.port1 }}
+PORT2={{ redis.cluster.port2 }}
+PORT3={{ redis.cluster.port3 }}
+
+
+MASTER1_ID=$(redis-cli -a ${PASSWD} --no-auth-warning  -h ${MASTER1}  -p ${PORT1} cluster nodes | awk -F "master" '{ print $1 }' | awk '/{{ redis.cluster.master.node2 }}:{{ redis.cluster.port2 }}@17002/' | awk 'NR==1 {print $1}')
+MASTER2_ID=$(redis-cli -a ${PASSWD} --no-auth-warning  -h ${MASTER1}  -p ${PORT1} cluster nodes | awk -F "master" '{ print $1 }' | awk '/{{ redis.cluster.master.node3 }}:{{ redis.cluster.port3 }}@17003/' | awk 'NR==1 {print $1}')
+MASTER3_ID=$(redis-cli -a ${PASSWD} --no-auth-warning  -h ${MASTER1}  -p ${PORT1} cluster nodes | awk -F "master" '{ print $1 }' | awk '/{{ redis.cluster.master.node1 }}:{{ redis.cluster.port1 }}@17001/' | awk 'NR==1 {print $1}')
+
+
+echo  yes | redis-cli -a ${PASSWD} --no-auth-warning --cluster  add-node ${SLAVE3}:${PORT2}  ${MASTER2}:${PORT2} --cluster-slave --cluster-master-id ${MASTER1_ID}
+echo  yes | redis-cli -a ${PASSWD} --no-auth-warning --cluster  add-node ${SLAVE1}:${PORT3}  ${MASTER3}:${PORT3} --cluster-slave --cluster-master-id ${MASTER2_ID}
+echo  yes | redis-cli -a ${PASSWD} --no-auth-warning --cluster  add-node ${SLAVE2}:${PORT1}  ${MASTER1}:${PORT1} --cluster-slave --cluster-master-id ${MASTER3_ID}
+
+echo  yes | redis-cli -a 12345 --no-auth-warning --cluster  add-node 192.168.97.115:7001  192.168.97.109:6379 --cluster-slave --cluster-master-id 3d5f0d2ebc6e6582ac4b3326b99d0662a9fc9f74
+===================
+echo  yes | redis-cli -a 12345 --no-auth-warning --cluster create 192.168.97.108:6379 192.168.97.109:6379 192.168.97.115:6379
+
+redis-cli -a 12345 --no-auth-warning  -h 192.168.97.108  -p 6379 cluster nodes | awk -F "master" '{ print $1 }' | awk '/192.168.97.108:6379@16379/' | awk 'NR==1 {print $1}'
+
+
+redis-cli -a 12345 --no-auth-warning  -h 192.168.97.108  -p 6379 cluster nodes | awk -F "master" '{ print $1 }'
+
+MASTER1_ID=$(redis-cli -a 12345 --no-auth-warning  -h 192.168.97.108  -p 6379 cluster nodes | tr -s ' ' | cut -d ' ' -f 1)
+echo  yes | redis-cli -a 12345 --no-auth-warning --cluster  add-node 192.168.97.109:7001 --cluster-slave --cluster-master-id ${MASTER1_ID}
+
+
+
+echo  yes | redis-cli -a 12345 --no-auth-warning --cluster  add-node 192.168.97.109:7001 --cluster-slave --cluster-master-id 0c7b02aba2a702ce0b12867606603612c06a104b
+redis-cli --cluster add-node 192.168.0.205:6381 192.168.0.205:6379 --cluster-slave --cluster-master-id da2dd33ec4eaca5a2adef62c9d70937457106d83
