@@ -5,3 +5,4 @@ SELECT table, round(sum(bytes) / 1024/1024/1024, 2) as size_gb FROM system.parts
 ```bash
 SHOW CREATE TABLE db.table
 ```
+DROP DATABASE db
