@@ -2,8 +2,9 @@
 
 - меняем hostname
 ```bash
-/etc/sysconfig/network
-  ```
+hostname=my-host-01
+sed -i "s/^HOSTNAME=.*$/HOSTNAME=$hostname/"  /etc/sysconfig/network
+```
 
 systemctl reboot
 
@@ -39,7 +40,7 @@ ip addr replace 192.168.97.242/24 dev eth0
 ```bash
 chkconfig ifplugd off
 ```
-vi /etc/net/ifaces/eth0/options
+vim /etc/net/ifaces/eth0/options
 ```bash
 USE_IFPLUGD=yes или USE_IFPLUGD=auto
 ```
