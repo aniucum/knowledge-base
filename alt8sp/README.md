@@ -1,3 +1,14 @@
+- altlinux.org/Etcnet
+
+- меняем hostname
+```bash
+/etc/sysconfig/network
+  ```
+
+ systemctl reboot
+
+
+/etc/net/ifaces/eth0/options
 
 задаём ip
 ```bash
