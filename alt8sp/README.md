@@ -5,7 +5,7 @@
 /etc/sysconfig/network
   ```
 
- systemctl reboot
+systemctl reboot
 
 
 /etc/net/ifaces/eth0/options
@@ -32,4 +32,14 @@ service network restart
 изменение IP, маски и шлюза командами ip addr {add|change|replace} ... и ip route { add | del | change }. Изменения не перманентны
 ```bash
 ip addr replace 192.168.97.242/24 dev eth0
+```
+
+### Настройка ifplugd. Демон, который поднимает интерфейс при подключении кабеля.
+- etcnet сам может конфигуририровать интерфейс, поэтому `ifplugd` вырубаем, а в `options` добавляем переменную `USE_IFPLUGD`
+```bash
+chkconfig ifplugd off
+```
+vi /etc/net/ifaces/eth0/options
+```bash
+USE_IFPLUGD=yes или USE_IFPLUGD=auto
 ```
