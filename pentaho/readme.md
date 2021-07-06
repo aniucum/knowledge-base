@@ -7,3 +7,9 @@ CATALINA_OPTS="-Xms2048m -Xmx6144m -XX:MaxPermSize=256m -Djavax.net.debug=all  -
 -Djavax.net.debug=all - включаем подробное логирование
 -Dcom.sun.jndi.ldap.object.disableEndpointIdentification=true  - отключаем идентификацию ldaps сервера при ошибке `No subject alternative names matching IP address found`
 ```
+
+- $path_install_pentaho/pentaho-server/tomcat/bin/setenv.sh
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-1.el7_9.x86_64/jre
+export JRE_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-1.el7_9.x86_64/jre
+```
